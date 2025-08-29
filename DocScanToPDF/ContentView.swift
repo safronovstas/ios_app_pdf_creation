@@ -29,7 +29,7 @@ struct ContentView: View {
             }
             .navigationTitle("Doc to PDF")
             .sheet(isPresented: $showingScanner) {
-                DocumentScannerView { images in
+                CameraScannerView { images in
                     scannedImages = images
                     pdfURL = PDFGenerator.createPDF(from: images)
                     OCRManager.recognizeText(from: images) { text in
