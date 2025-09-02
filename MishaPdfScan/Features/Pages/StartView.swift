@@ -8,8 +8,10 @@ struct ScannedPage: Identifiable, Hashable {
 
 struct StartView: View {
     @AppStorage("hasSeenOnboarding") private var hasSeenOnboarding = false
+    
+    @EnvironmentObject private var store: PagesStore
     @State private var showOnboarding = false
-
+    
     private let onboardingPages: [OnboardingPage] = [
         .init(title: "Сканируй документы",
               subtitle: "Используй камеру, автообрезку и выравнивание.",
@@ -21,17 +23,20 @@ struct StartView: View {
               subtitle: "Поворот, обрезка, PDF одним тапом.",
               systemImage: "doc.richtext"),
     ]
-
+    
     // ДОЛЖЕН жить долго: делегат камеры/пикера
     @StateObject private var camera = CameraController()
-
+    
     // Твои страницы. Если у тебя есть PagesStore — замени на @EnvironmentObject.
     @State private var pages: [ScannedPage] = []
-
+    
     @State private var showGallery = false
     @State private var showCamera = false
     @State private var processing = false
-
+    @State private var selection: [PhotosPickerItem] = []
+    
+    public init() {}
+    
     func exportPDF() {
         guard !pages.isEmpty else { return }
         let images = pages.map(\.image)
@@ -39,11 +44,33 @@ struct StartView: View {
         let activity = UIActivityViewController(activityItems: [url], applicationActivities: nil)
         UIApplication.shared.topMostViewController()?.present(activity, animated: true)
     }
-
+    
     var body: some View {
         NavigationStack {
             VStack(spacing: 16) {
-                // КНОПКА: Сканировать (камера)
+                PhotosPicker(
+                    selection: $selection,
+                    maxSelectionCount: 50,
+                    matching: .images
+                ) {
+                    Label("Выбрать из галереи", systemImage: "photo.on.rectangle")
+                        .frame(maxWidth: .infinity)
+                }
+                .buttonStyle(.bordered)
+                .controlSize(.large)
+                .onChange(of: selection) { newItems in
+                    Task {
+                        var imgs: [UIImage] = []
+                        for item in newItems {
+                            if let data = try? await item.loadTransferable(type: Data.self),
+                               let img = UIImage(data: data) { imgs.append(img) }
+                        }
+                        await MainActor.run { store.add(images: imgs) }
+                        selection.removeAll()
+                    }
+                }
+                
+                
                 Button {
                     showCamera = true
                 } label: {
@@ -52,45 +79,16 @@ struct StartView: View {
                 }
                 .buttonStyle(.borderedProminent)
                 .controlSize(.large)
-
-                // КНОПКА: Выбрать из галереи (мультивыбор)
-                Button {
-                    showGallery = true
-                } label: {
-                    Label("Выбрать из галереи", systemImage: "photo.on.rectangle")
-                        .frame(maxWidth: .infinity)
-                }
-                .buttonStyle(.bordered)
-                .controlSize(.large)
-
-                // (опционально) снизу краткий список выбранных страниц
-                if !pages.isEmpty {
-                    List {
-                        Section("Страницы") {
-                            ForEach(Array(pages.enumerated()), id: \.element.id) { idx, _ in
-                                PageRow(
-                                    page: $pages[idx],
-                                    index: idx + 1,
-                                    onDelete: { pages.remove(at: idx) },
-                                )
-                            }
-                        }
-                    }
-
-                    Button {
-                        exportPDF()
-                    } label: {
-                        Label("Export PDF", systemImage: "doc.fill")
-                            .frame(maxWidth: .infinity)
-                    }
-                    .buttonStyle(.borderedProminent)
-                    .disabled(pages.isEmpty || processing)
-
-                } else {
+                
+                
+                if store.pages.isEmpty {
                     Spacer()
                     Text("Начни со сканирования или импорта из галереи")
                         .foregroundStyle(.secondary)
                     Spacer()
+                } else {
+                    PagesView()
+                        .environmentObject(store)
                 }
             }
             .padding()
@@ -102,7 +100,9 @@ struct StartView: View {
         }
         // Открыть камеру (full screen)
         .fullScreenCover(isPresented: $showCamera) {
-            CameraScreen(camera: camera) // см. блок 3
+            CameraScreen { captured in
+                if let captured { store.add(images: [captured]) }
+            }
         }
         // Получаем выбранные из галереи изображения
         .onAppear {
@@ -127,6 +127,7 @@ struct StartView: View {
             showCamera = false
             // camera.capturedImage = nil // если нужно сбрасывать
         }
+        
     }
 }
 
