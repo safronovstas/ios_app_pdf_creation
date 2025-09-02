@@ -1,6 +1,6 @@
+import CoreImage
 import UIKit
 import Vision
-import CoreImage
 
 enum VisionScanner {
     static func detectAndCorrect(image: UIImage) -> UIImage? {

@@ -1,0 +1,46 @@
+disabled_rules: # отключаем то, что мешает на старте
+  - trailing_whitespace
+  - line_length
+
+opt_in_rules: # включаем полезные проверки
+  - force_unwrapping
+  - force_cast
+  - empty_count
+  - redundant_optional_initialization
+  - vertical_whitespace_between_cases
+  - attributes
+
+analyzer_rules: # более глубокие проверки
+  - unused_declaration
+  - unused_import
+
+included: # папки для анализа
+  - Sources
+  - Tests
+
+excluded: # игнорируем
+  - Carthage
+  - Pods
+  - Generated
+
+line_length:
+  warning: 120
+  error: 200
+  ignores_comments: true
+
+identifier_name:
+  min_length: 2
+  max_length: 40
+  excluded: [id, ok, x, y]
+
+type_body_length:
+  warning: 300
+  error: 500
+
+file_length:
+  warning: 400
+  error: 800
+
+function_body_length:
+  warning: 60
+  error: 100

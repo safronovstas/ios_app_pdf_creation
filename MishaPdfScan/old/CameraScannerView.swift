@@ -1,16 +1,16 @@
-//import SwiftUI
-//import AVFoundation
+// import SwiftUI
+// import AVFoundation
 //
-//struct CameraScannerView: View {
+// struct CameraScannerView: View {
 //    var completion: ([UIImage]) -> Void
 //    @Environment(\.dismiss) private var dismiss
 //    @StateObject private var model = CameraScannerModel()
-//    
+//
 //    var body: some View {
 //        ZStack {
 //            CameraPreview(session: model.session)
 //                .ignoresSafeArea()
-//            
+//
 //            VStack {
 //                Picker("Camera", selection: $model.selectedDeviceID) {
 //                    ForEach(model.availableDevices, id: \.uniqueID) { device in
@@ -22,9 +22,9 @@
 //                .onChange(of: model.selectedDeviceID) { _ in
 //                    model.updateSelectedDevice()
 //                }
-//                
+//
 //                Spacer()
-//                
+//
 //                HStack {
 //                    Button(action: model.capturePhoto) {
 //                        Image(systemName: "camera.circle.fill")
@@ -33,7 +33,7 @@
 //                            .foregroundColor(.white)
 //                    }
 //                    .padding()
-//                    
+//
 //                    Button("Done") {
 //                        dismiss()
 //                        completion(model.capturedImages)
@@ -55,16 +55,16 @@
 //            model.stopSession()
 //        }
 //    }
-//}
+// }
 //
-//final class CameraScannerModel: NSObject, ObservableObject, AVCapturePhotoCaptureDelegate {
+// final class CameraScannerModel: NSObject, ObservableObject, AVCapturePhotoCaptureDelegate {
 //    @Published var session = AVCaptureSession()
 //    @Published var availableDevices: [AVCaptureDevice] = []
 //    @Published var selectedDeviceID: String = ""
 //    @Published var capturedImages: [UIImage] = []
-//    
+//
 //    private let photoOutput = AVCapturePhotoOutput()
-//    
+//
 //    func setupSession() {
 //        let discovery = AVCaptureDevice.DiscoverySession(
 //            deviceTypes: [.builtInWideAngleCamera, .builtInUltraWideCamera, .builtInTelephotoCamera],
@@ -80,12 +80,12 @@
 //            session.addOutput(photoOutput)
 //        }
 //    }
-//    
+//
 //    func updateSelectedDevice() {
 //        guard let device = availableDevices.first(where: { $0.uniqueID == selectedDeviceID }) else { return }
 //        configureInput(device: device)
 //    }
-//    
+//
 //    private func configureInput(device: AVCaptureDevice) {
 //        session.beginConfiguration()
 //        for input in session.inputs {
@@ -96,7 +96,7 @@
 //        }
 //        session.commitConfiguration()
 //    }
-//    
+//
 //    func startSession() {
 //        if !session.isRunning {
 //            DispatchQueue.global(qos: .background).async {
@@ -104,18 +104,18 @@
 //            }
 //        }
 //    }
-//    
+//
 //    func stopSession() {
 //        if session.isRunning {
 //            session.stopRunning()
 //        }
 //    }
-//    
+//
 //    func capturePhoto() {
 //        let settings = AVCapturePhotoSettings()
 //        photoOutput.capturePhoto(with: settings, delegate: self)
 //    }
-//    
+//
 //    func photoOutput(_ output: AVCapturePhotoOutput,
 //                     didFinishProcessingPhoto photo: AVCapturePhoto,
 //                     error: Error?) {
@@ -125,11 +125,11 @@
 //        let enhanced = ImageEnhancer.enhance(image)
 //        capturedImages.append(enhanced)
 //    }
-//}
+// }
 //
-//struct CameraPreview: UIViewRepresentable {
+// struct CameraPreview: UIViewRepresentable {
 //    let session: AVCaptureSession
-//    
+//
 //    func makeUIView(context: Context) -> UIView {
 //        let view = UIView(frame: UIScreen.main.bounds)
 //        let preview = AVCaptureVideoPreviewLayer(session: session)
@@ -138,6 +138,6 @@
 //        view.layer.addSublayer(preview)
 //        return view
 //    }
-//    
+//
 //    func updateUIView(_ uiView: UIView, context: Context) {}
-//}
+// }

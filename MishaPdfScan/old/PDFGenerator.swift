@@ -1,7 +1,7 @@
-//import UIKit
-//import PDFKit
+// import UIKit
+// import PDFKit
 //
-//enum PDFGenerator {
+// enum PDFGenerator {
 //    static func createPDF(from images: [UIImage]) -> URL? {
 //        let document = PDFDocument()
 //        for (index, image) in images.enumerated() {
@@ -12,4 +12,4 @@
 //        document.write(to: url)
 //        return url
 //    }
-//}
+// }

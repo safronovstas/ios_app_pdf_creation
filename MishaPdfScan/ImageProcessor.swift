@@ -1,5 +1,5 @@
-import UIKit
 import CoreImage
+import UIKit
 
 enum ImageProcessor {
     static func autoEnhance(image: UIImage) -> UIImage {

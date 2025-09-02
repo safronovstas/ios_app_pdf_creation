@@ -1,7 +1,7 @@
-//import UIKit
-//import CoreImage
+// import UIKit
+// import CoreImage
 //
-//enum ImageEnhancer {
+// enum ImageEnhancer {
 //    private static let context = CIContext()
 //
 //    static func enhance(_ image: UIImage) -> UIImage {
@@ -28,4 +28,4 @@
 //
 //        return image
 //    }
-//}
+// }

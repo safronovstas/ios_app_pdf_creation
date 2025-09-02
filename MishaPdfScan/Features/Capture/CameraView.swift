@@ -4,14 +4,14 @@
 //
 //  Created by mac air on 9/1/25.
 //
-import SwiftUI
 import AVFoundation
-import Vision
-import UIKit          // ✅ нужно для UIImagePickerControllerDelegate
 import PhotosUI
+import SwiftUI
+import UIKit // ✅ нужно для UIImagePickerControllerDelegate
+import Vision
 
 struct CameraView: UIViewRepresentable {
     let controller: CameraController
-    func makeUIView(context: Context) -> PreviewView { PreviewView(layer: controller.makePreviewLayer()) }
-    func updateUIView(_ uiView: PreviewView, context: Context) {}
+    func makeUIView(context _: Context) -> PreviewView { PreviewView(layer: controller.makePreviewLayer()) }
+    func updateUIView(_: PreviewView, context _: Context) {}
 }

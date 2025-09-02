@@ -1,7 +1,7 @@
-//import SwiftUI
-//import PDFKit
+// import SwiftUI
+// import PDFKit
 //
-//struct ContentView: View {
+// struct ContentView: View {
 //    @State private var showingScanner = false
 //    @State private var scannedImages: [UIImage] = []
 //    @State private var recognizedText: String = ""
@@ -39,9 +39,9 @@
 //            }
 //        }
 //    }
-//}
+// }
 //
-//struct PDFKitView: UIViewRepresentable {
+// struct PDFKitView: UIViewRepresentable {
 //    let url: URL
 //
 //    func makeUIView(context: Context) -> PDFView {
@@ -54,8 +54,8 @@
 //    func updateUIView(_ uiView: PDFView, context: Context) {
 //        uiView.document = PDFDocument(url: url)
 //    }
-//}
+// }
 //
-//#Preview {
+// #Preview {
 //    ContentView()
-//}
+// }

@@ -5,25 +5,24 @@
 //  Created by mac air on 9/1/25.
 //
 
-import SwiftUI
 import AVFoundation
+import PhotosUI // ✅ нужно для PHPicker
+import SwiftUI
+import UIKit // ✅ нужно для UIImagePickerControllerDelegate
 import Vision
-import UIKit          // ✅ нужно для UIImagePickerControllerDelegate
-import PhotosUI       // ✅ нужно для PHPicker
 
 class CameraController: NSObject, ObservableObject,
-                        AVCapturePhotoCaptureDelegate,
-                        UIImagePickerControllerDelegate,
-                        UINavigationControllerDelegate {
-
+    AVCapturePhotoCaptureDelegate,
+    UIImagePickerControllerDelegate,
+    UINavigationControllerDelegate
+{
     @Published var authorized = false
     @Published var running = false
     @Published var capturedImage: UIImage?
 
     /// ✅ колбэк для множественного выбора из PHPicker
-       var onPickedImages: (([UIImage]) -> Void)?
+    var onPickedImages: (([UIImage]) -> Void)?
 
-    
     private let session = AVCaptureSession()
     private let output = AVCapturePhotoOutput()
     private let queue = DispatchQueue(label: "camera.session")
@@ -48,8 +47,7 @@ class CameraController: NSObject, ObservableObject,
             }
         }
     }
-    
-    
+
     private func startSession() {
         queue.async {
             self.session.beginConfiguration()
@@ -57,7 +55,8 @@ class CameraController: NSObject, ObservableObject,
 
             if let device = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .back),
                let input = try? AVCaptureDeviceInput(device: device),
-               self.session.canAddInput(input) {
+               self.session.canAddInput(input)
+            {
                 self.session.addInput(input)
             }
             if self.session.canAddOutput(self.output) {
@@ -81,17 +80,20 @@ class CameraController: NSObject, ObservableObject,
         let settings = AVCapturePhotoSettings()
         output.capturePhoto(with: settings, delegate: self)
     }
-    
+
     // MARK: - AVCapturePhotoCaptureDelegate
-     func photoOutput(_ output: AVCapturePhotoOutput, didFinishProcessingPhoto photo: AVCapturePhoto, error: Error?) {
-         if let data = photo.fileDataRepresentation(), let ui = UIImage(data: data) {
-             handleCaptured(image: ui)
-         }
-     }
+
+    func photoOutput(_: AVCapturePhotoOutput, didFinishProcessingPhoto photo: AVCapturePhoto, error _: Error?) {
+        if let data = photo.fileDataRepresentation(), let ui = UIImage(data: data) {
+            handleCaptured(image: ui)
+        }
+    }
 
     // MARK: - UIImagePickerControllerDelegate (одиночный выбор)
+
     func imagePickerController(_ picker: UIImagePickerController,
-                               didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+                               didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any])
+    {
         picker.dismiss(animated: true)
         if let img = info[.originalImage] as? UIImage {
             handleCaptured(image: img)
@@ -106,7 +108,8 @@ class CameraController: NSObject, ObservableObject,
 
     func makePreviewLayer() -> AVCaptureVideoPreviewLayer {
         AVCaptureVideoPreviewLayer(session: session)
-    }}
+    }
+}
 
 @available(iOS 14.0, *)
 extension CameraController: PHPickerViewControllerDelegate {
@@ -130,7 +133,7 @@ extension CameraController: PHPickerViewControllerDelegate {
         }
 
         group.notify(queue: .main) { [weak self] in
-            self?.onPickedImages?(images)   // вернём массив выбранных картинок
+            self?.onPickedImages?(images) // вернём массив выбранных картинок
         }
     }
 }

@@ -5,18 +5,18 @@
 //  Created by mac air on 9/1/25.
 //
 
-
 // SwiftUI Scan Editor — Rotate & Crop
 // Features: Rotate 90°, Manual Crop UI (resizable/movable), optional Auto-Detect document edges via Vision
 // Works with iOS 16+
 // If you prefer a polished UIKit crop UI, you can swap `ManualCropSheet` with TOCropViewController via SPM.
 
-import SwiftUI
-import Vision
 import CoreImage
 import CoreImage.CIFilterBuiltins
+import SwiftUI
+import Vision
 
 // MARK: - Public API
+
 // Use ImageEditorView in your app, pass in a starting UIImage and a completion handler that receives the edited image
 struct ImageEditorView: View {
     @Environment(\.dismiss) private var dismiss
@@ -83,7 +83,7 @@ struct ImageEditorView: View {
                 if let cropped { self.working = cropped }
             }
         }
-        .alert("Не удалось найти границы документа", isPresented: $showAutoCropError) { Button("OK", role: .cancel) { } }
+        .alert("Не удалось найти границы документа", isPresented: $showAutoCropError) { Button("OK", role: .cancel) {} }
     }
 
     private func rotate90() {
@@ -94,7 +94,7 @@ struct ImageEditorView: View {
         VisionAutoCropper.detectAndCorrectPerspective(image: working) { result in
             DispatchQueue.main.async {
                 switch result {
-                case .success(let img): self.working = img
+                case let .success(img): self.working = img
                 case .failure: self.showAutoCropError = true
                 }
             }
@@ -103,6 +103,7 @@ struct ImageEditorView: View {
 }
 
 // MARK: - Manual Crop Sheet (SwiftUI)
+
 // A simple, resizable crop overlay with draggable handles. Fixed output is the selected rect mapped into the image space.
 struct ManualCropSheet: View {
     @Environment(\.dismiss) private var dismiss
@@ -124,12 +125,12 @@ struct ManualCropSheet: View {
                         Image(uiImage: image)
                             .resizable()
                             .scaledToFit()
-                            .background(GeometryReader { ig in
+                            .background(GeometryReader { _ in
                                 Color.clear.onAppear {
                                     // compute image frame after layout
                                     let fitted = ImageFitter.fittedRect(contentSize: image.size, in: geo.size)
-                                    self.imageFrame = CGRect(origin: CGPoint(x: (geo.size.width - fitted.width)/2,
-                                                                             y: (geo.size.height - fitted.height)/2),
+                                    self.imageFrame = CGRect(origin: CGPoint(x: (geo.size.width - fitted.width) / 2,
+                                                                             y: (geo.size.height - fitted.height) / 2),
                                                              size: fitted)
                                     if cropRect == .zero {
                                         // initialize crop rect with 80% of image frame
@@ -140,8 +141,8 @@ struct ManualCropSheet: View {
                                 }
                                 .onChange(of: geo.size) { _ in
                                     let fitted = ImageFitter.fittedRect(contentSize: image.size, in: geo.size)
-                                    self.imageFrame = CGRect(origin: CGPoint(x: (geo.size.width - fitted.width)/2,
-                                                                             y: (geo.size.height - fitted.height)/2),
+                                    self.imageFrame = CGRect(origin: CGPoint(x: (geo.size.width - fitted.width) / 2,
+                                                                             y: (geo.size.height - fitted.height) / 2),
                                                              size: fitted)
                                 }
                             })
@@ -195,6 +196,7 @@ struct ManualCropSheet: View {
 }
 
 // MARK: - Crop Overlay + Handles
+
 struct CropOverlay: View {
     @Binding var cropRect: CGRect
     let bounds: CGRect
@@ -210,7 +212,7 @@ struct CropOverlay: View {
                 .foregroundStyle(.white)
 
             // Grid (rule of thirds)
-            ForEach(1..<3) { i in
+            ForEach(1 ..< 3) { i in
                 Path { p in
                     let x = cropRect.minX + CGFloat(i) * cropRect.width / 3
                     p.move(to: CGPoint(x: x, y: cropRect.minY))
@@ -354,6 +356,7 @@ enum ImageFitter {
 }
 
 // MARK: - Vision auto-crop with perspective correction
+
 enum VisionAutoCropper {
     static func detectAndCorrectPerspective(image: UIImage, completion: @escaping (Result<UIImage, Error>) -> Void) {
         guard let cg = image.cgImage else {
@@ -410,6 +413,7 @@ enum CIPerspective {
 }
 
 // MARK: - UIImage helpers (rotate/crop)
+
 extension UIImage {
     func rotated(byDegrees degrees: CGFloat) -> UIImage? {
         let radians = degrees * .pi / 180
@@ -417,25 +421,26 @@ extension UIImage {
         newRect.origin = .zero
 
         UIGraphicsBeginImageContextWithOptions(newRect.size, false, scale)
-        guard let ctx = UIGraphicsGetCurrentContext(), let cg = self.cgImage else { return nil }
-        ctx.translateBy(x: newRect.width/2, y: newRect.height/2)
+        guard let ctx = UIGraphicsGetCurrentContext(), let cg = cgImage else { return nil }
+        ctx.translateBy(x: newRect.width / 2, y: newRect.height / 2)
         ctx.rotate(by: radians)
         ctx.scaleBy(x: 1, y: -1)
-        ctx.draw(cg, in: CGRect(x: -size.width/2, y: -size.height/2, width: size.width, height: size.height))
+        ctx.draw(cg, in: CGRect(x: -size.width / 2, y: -size.height / 2, width: size.width, height: size.height))
         let img = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
         return img
     }
 
     func cropped(to rect: CGRect) -> UIImage? {
-        guard let cg = self.cgImage else { return nil }
+        guard let cg = cgImage else { return nil }
         let safeRect = CGRect(x: max(0, rect.origin.x), y: max(0, rect.origin.y), width: min(CGFloat(cg.width) - rect.origin.x, rect.width), height: min(CGFloat(cg.height) - rect.origin.y, rect.height)).integral
         guard let crop = cg.cropping(to: safeRect) else { return nil }
-        return UIImage(cgImage: crop, scale: self.scale, orientation: self.imageOrientation)
+        return UIImage(cgImage: crop, scale: scale, orientation: imageOrientation)
     }
 }
 
 // MARK: - Quick Preview (remove in production)
+
 struct ImageEditorView_Previews: PreviewProvider {
     static var previews: some View {
         let demo = UIImage(systemName: "doc.text")!

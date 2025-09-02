@@ -6,7 +6,6 @@
 //
 import SwiftUI
 
-
 struct OnboardingView: View {
     @State private var index = 0
     let pages: [OnboardingPage]

@@ -6,7 +6,6 @@
 //
 import SwiftUI
 
-
 struct OnboardingPage: Identifiable {
     let id = UUID()
     let title: String

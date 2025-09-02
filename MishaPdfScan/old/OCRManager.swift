@@ -1,7 +1,7 @@
-//import UIKit
-//import Vision
+// import UIKit
+// import Vision
 //
-//enum OCRManager {
+// enum OCRManager {
 //    static func recognizeText(from images: [UIImage], completion: @escaping (String) -> Void) {
 //        var fullText = ""
 //        let group = DispatchGroup()
@@ -25,4 +25,4 @@
 //            completion(fullText)
 //        }
 //    }
-//}
+// }

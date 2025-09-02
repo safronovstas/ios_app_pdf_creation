@@ -1,12 +1,12 @@
-//import SwiftUI
-//import PhotosUI
+// import SwiftUI
+// import PhotosUI
 //
-//struct ScannedPage: Identifiable, Hashable {
+// struct ScannedPage: Identifiable, Hashable {
 //    let id = UUID()
 //    var image: UIImage
-//}
+// }
 //
-//struct ContentView: View {
+// struct ContentView: View {
 //    @StateObject private var camera = CameraController()
 //    @State private var showPicker = false
 //    @State private var pages: [ScannedPage] = []
@@ -123,5 +123,5 @@
 ////        let activity = UIActivityViewController(activityItems: [url], applicationActivities: nil)
 ////        UIApplication.shared.topMostViewController()?.present(activity, animated: true)
 ////    }
-//}
+// }
 //

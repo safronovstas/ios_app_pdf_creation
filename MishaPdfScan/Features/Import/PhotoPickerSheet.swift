@@ -1,19 +1,19 @@
-import SwiftUI
 import AVFoundation
+import PhotosUI // ✅ нужно для PHPicker
+import SwiftUI
+import UIKit // ✅ нужно для UIImagePickerControllerDelegate
 import Vision
-import UIKit          // ✅ нужно для UIImagePickerControllerDelegate
-import PhotosUI       // ✅ нужно для PHPicker
-
 
 struct PhotoPickerSheet: UIViewControllerRepresentable {
     let controller: CameraController
-    func makeUIViewController(context: Context) -> PHPickerViewController {
+    func makeUIViewController(context _: Context) -> PHPickerViewController {
         var cfg = PHPickerConfiguration(photoLibrary: .shared())
         cfg.filter = .images
-        cfg.selectionLimit = 0            // 0 = без лимита
+        cfg.selectionLimit = 0 // 0 = без лимита
         let picker = PHPickerViewController(configuration: cfg)
-        picker.delegate = controller      // ВАЖНО: делегат — та же живая инстанция
+        picker.delegate = controller // ВАЖНО: делегат — та же живая инстанция
         return picker
     }
-    func updateUIViewController(_: PHPickerViewController, context: Context) {}
+
+    func updateUIViewController(_: PHPickerViewController, context _: Context) {}
 }

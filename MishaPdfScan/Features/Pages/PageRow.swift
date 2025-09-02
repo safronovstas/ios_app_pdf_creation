@@ -6,7 +6,6 @@
 //
 import SwiftUI
 
-
 /// Отдельная ячейка — проще для компилятора
 struct PageRow: View {
     @Binding var page: ScannedPage
@@ -47,8 +46,8 @@ struct PageRow: View {
         }
         // (опционально) Контекстное меню долгим тапом
         .contextMenu {
-            Button { rotate(90) }  label: { Label("Rotate 90°",  systemImage: "rotate.right") }
-            Button { rotate(-90) } label: { Label("Rotate -90°", systemImage: "rotate.left")  }
+            Button { rotate(90) } label: { Label("Rotate 90°", systemImage: "rotate.right") }
+            Button { rotate(-90) } label: { Label("Rotate -90°", systemImage: "rotate.left") }
         }
     }
 

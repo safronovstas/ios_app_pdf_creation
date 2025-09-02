@@ -1,11 +1,10 @@
-import SwiftUI
 import PhotosUI
+import SwiftUI
 
 struct ScannedPage: Identifiable, Hashable {
     let id = UUID()
     var image: UIImage
 }
-
 
 struct StartView: View {
     @AppStorage("hasSeenOnboarding") private var hasSeenOnboarding = false
@@ -20,10 +19,9 @@ struct StartView: View {
               systemImage: "photo.on.rectangle"),
         .init(title: "Редактируй и экспортируй",
               subtitle: "Поворот, обрезка, PDF одним тапом.",
-              systemImage: "doc.richtext")
+              systemImage: "doc.richtext"),
     ]
-    
-    
+
     // ДОЛЖЕН жить долго: делегат камеры/пикера
     @StateObject private var camera = CameraController()
 
@@ -31,9 +29,8 @@ struct StartView: View {
     @State private var pages: [ScannedPage] = []
 
     @State private var showGallery = false
-    @State private var showCamera  = false
+    @State private var showCamera = false
     @State private var processing = false
-
 
     func exportPDF() {
         guard !pages.isEmpty else { return }
@@ -42,7 +39,7 @@ struct StartView: View {
         let activity = UIActivityViewController(activityItems: [url], applicationActivities: nil)
         UIApplication.shared.topMostViewController()?.present(activity, animated: true)
     }
-    
+
     var body: some View {
         NavigationStack {
             VStack(spacing: 16) {
@@ -79,7 +76,7 @@ struct StartView: View {
                             }
                         }
                     }
-                    
+
                     Button {
                         exportPDF()
                     } label: {
@@ -88,7 +85,7 @@ struct StartView: View {
                     }
                     .buttonStyle(.borderedProminent)
                     .disabled(pages.isEmpty || processing)
-                    
+
                 } else {
                     Spacer()
                     Text("Начни со сканирования или импорта из галереи")
@@ -105,7 +102,7 @@ struct StartView: View {
         }
         // Открыть камеру (full screen)
         .fullScreenCover(isPresented: $showCamera) {
-            CameraScreen(camera: camera)        // см. блок 3
+            CameraScreen(camera: camera) // см. блок 3
         }
         // Получаем выбранные из галереи изображения
         .onAppear {
@@ -117,10 +114,10 @@ struct StartView: View {
             }
         }
         .fullScreenCover(isPresented: $showOnboarding) {
-              OnboardingView(pages: onboardingPages) {
-                  hasSeenOnboarding = true
-                  showOnboarding = false
-              }
+            OnboardingView(pages: onboardingPages) {
+                hasSeenOnboarding = true
+                showOnboarding = false
+            }
         }
         // Получаем кадр из камеры
         .onChange(of: camera.capturedImage) { img in

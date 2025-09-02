@@ -1,5 +1,5 @@
 //
-//  Misha_Pdf_ScanUITestsLaunchTests.swift
+//  MishaPdfScanUITestsLaunchTests.swift
 //  Misha Pdf ScanUITests
 //
 //  Created by mac air on 8/25/25.
@@ -8,7 +8,6 @@
 import XCTest
 
 final class MishaPdfScanUITestsLaunchTests: XCTestCase {
-
     override class var runsForEachTargetApplicationUIConfiguration: Bool {
         true
     }
