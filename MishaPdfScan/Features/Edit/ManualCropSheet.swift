@@ -28,7 +28,8 @@ struct ManualCropSheet: View {
                             // Тень вокруг
                             Color.black.opacity(0.55)
                                 .mask(CropMask(cropRect: cropRect).fill(style: FillStyle(eoFill: true)))
-
+                                .allowsHitTesting(false)              // ← не перехватывать тапы
+                            
                             // Сетка + ручки + перетаскивание
                             CropOverlay(cropRect: $cropRect, bounds: imageFrame)
                         }
@@ -127,10 +128,11 @@ private struct CropOverlay: View {
     let bounds: CGRect
 
     private let minSize: CGFloat = 40
-    private let handleSize: CGFloat = 22
-    private let edgeHit: CGFloat = 30
+    private let handleSize: CGFloat = 28
+    private let hitExpand: CGFloat = 12   // расширение хит-зоны
 
     @State private var baseRect: CGRect = .zero
+    @State private var active: Corner? = nil
 
     var body: some View {
         ZStack {
@@ -155,79 +157,49 @@ private struct CropOverlay: View {
             }
             .zIndex(1)
 
-            // Перемещение всей области — ПОД ручками
-            Rectangle()
-                .fill(.clear)
-                .frame(width: cropRect.width, height: cropRect.height)
-                .position(x: cropRect.midX, y: cropRect.midY)
-                .contentShape(Rectangle())
-                .gesture(
-                    DragGesture(minimumDistance: 0)
-                        .onChanged { g in
-                            if baseRect == .zero { baseRect = cropRect }
-                            var r = baseRect.offsetBy(dx: g.translation.width, dy: g.translation.height)
-                            r = clamp(r, in: bounds, minSize: minSize)
-                            cropRect = r
-                        }
-                        .onEnded { _ in baseRect = .zero }
-                )
-                .zIndex(0)
-
-            // Угловые ручки — САМАЯ верхняя zIndex
-            handle(.topLeft).zIndex(3)
-            handle(.topRight).zIndex(3)
-            handle(.bottomLeft).zIndex(3)
-            handle(.bottomRight).zIndex(3)
-
-            // Боковые ручки — выше рамки/сетки, ниже углов (чтобы углы «побеждали» на пересечении)
-            edgeHandle(.top).zIndex(2)
-            edgeHandle(.bottom).zIndex(2)
-            edgeHandle(.left).zIndex(2)
-            edgeHandle(.right).zIndex(2)
+            // УГЛЫ — единственный способ менять рамку
+            cornerHandle(.topLeft).zIndex(3)
+            cornerHandle(.topRight).zIndex(3)
+            cornerHandle(.bottomLeft).zIndex(3)
+            cornerHandle(.bottomRight).zIndex(3)
         }
     }
 
-    // MARK: — Ручки
-    private func handle(_ corner: Corner) -> some View {
-        Circle()
-            .fill(.white)
-            .overlay(Circle().stroke(.black.opacity(0.6), lineWidth: 1))
-            .frame(width: handleSize, height: handleSize)
-            .position(cornerPos(corner))
-            .contentShape(Circle())
-            .highPriorityGesture(
-                DragGesture(minimumDistance: 0)
-                    .onChanged { g in
-                        if baseRect == .zero { baseRect = cropRect }
-                        var r = resize(from: baseRect, corner: corner, t: g.translation)
-                        r = clamp(r, in: bounds, minSize: minSize)
-                        cropRect = r
+    // MARK: — Угловая ручка
+    private func cornerHandle(_ c: Corner) -> some View {
+        // большая невидимая хит-зона + видимая «кнопка»
+        ZStack {
+            // хит-зона ~44pt, чтобы легко схватить
+            Rectangle().fill(Color.clear)
+                .frame(width: 44, height: 44)
+
+            Circle()
+                .fill(active == c ? Color.yellow : Color.white)
+                .overlay(Circle().stroke(.black.opacity(0.6), lineWidth: 1))
+                .frame(width: 28, height: 28)
+        }
+        .position(cornerPos(c))
+        .highPriorityGesture(
+            DragGesture(minimumDistance: 0)
+                .onChanged { g in
+                    if baseRect == .zero {
+                        baseRect = cropRect
+                        active = c
+                        UIImpactFeedbackGenerator(style: .light).impactOccurred()
                     }
-                    .onEnded { _ in baseRect = .zero }
-            )
+                    var r = resize(from: baseRect, corner: c, t: g.translation)
+                    r = clamp(r, in: bounds, minSize: 40)
+                    cropRect = r
+                }
+                .onEnded { _ in
+                    baseRect = .zero
+                    active = nil
+                }
+        )
     }
 
-    private func edgeHandle(_ edge: Edge) -> some View {
-        // Хит-зона полностью ВНУТРИ рамки
-        Rectangle()
-            .fill(.clear)
-            .frame(width: edge.isVertical ? edgeHit : cropRect.width,
-                   height: edge.isHorizontal ? edgeHit : cropRect.height)
-            .position(edgeCenterInside(edge))
-            .contentShape(Rectangle())
-            .highPriorityGesture(
-                DragGesture(minimumDistance: 0)
-                    .onChanged { g in
-                        if baseRect == .zero { baseRect = cropRect }
-                        var r = resize(from: baseRect, edge: edge, t: g.translation)
-                        r = clamp(r, in: bounds, minSize: minSize)
-                        cropRect = r
-                    }
-                    .onEnded { _ in baseRect = .zero }
-            )
-    }
 
-    // MARK: — Геометрия позиций
+    // MARK: — Геометрия углов
     private func cornerPos(_ c: Corner) -> CGPoint {
         switch c {
         case .topLeft:     return .init(x: cropRect.minX, y: cropRect.minY)
@@ -237,31 +209,21 @@ private struct CropOverlay: View {
         }
     }
 
-    // Центруем полосы ВНУТРИ прямоугольника, а не на самой границе
-    private func edgeCenterInside(_ e: Edge) -> CGPoint {
-        switch e {
-        case .top:    return .init(x: cropRect.midX, y: cropRect.minY + edgeHit/2)
-        case .bottom: return .init(x: cropRect.midX, y: cropRect.maxY - edgeHit/2)
-        case .left:   return .init(x: cropRect.minX + edgeHit/2, y: cropRect.midY)
-        case .right:  return .init(x: cropRect.maxX - edgeHit/2, y: cropRect.midY)
-        }
-    }
-
-    // MARK: — Ресайз из базового прямоугольника
+    // MARK: — Ресайз от базового прямоугольника
     private func resize(from base: CGRect, corner: Corner, t: CGSize) -> CGRect {
         var r = base
         switch corner {
         case .topLeft:
-            r.origin.x = base.origin.x + t.width
+            r.origin.x    = base.origin.x + t.width
             r.size.width  = max(minSize, base.width  - t.width)
-            r.origin.y = base.origin.y + t.height
+            r.origin.y    = base.origin.y + t.height
             r.size.height = max(minSize, base.height - t.height)
         case .topRight:
             r.size.width  = max(minSize, base.width  + t.width)
-            r.origin.y = base.origin.y + t.height
+            r.origin.y    = base.origin.y + t.height
             r.size.height = max(minSize, base.height - t.height)
         case .bottomLeft:
-            r.origin.x = base.origin.x + t.width
+            r.origin.x    = base.origin.x + t.width
             r.size.width  = max(minSize, base.width  - t.width)
             r.size.height = max(minSize, base.height + t.height)
         case .bottomRight:
@@ -271,24 +233,7 @@ private struct CropOverlay: View {
         return r
     }
 
-    private func resize(from base: CGRect, edge: Edge, t: CGSize) -> CGRect {
-        var r = base
-        switch edge {
-        case .top:
-            r.origin.y = base.origin.y + t.height
-            r.size.height = max(minSize, base.height - t.height)
-        case .bottom:
-            r.size.height = max(minSize, base.height + t.height)
-        case .left:
-            r.origin.x = base.origin.x + t.width
-            r.size.width = max(minSize, base.width - t.width)
-        case .right:
-            r.size.width = max(minSize, base.width + t.width)
-        }
-        return r
-    }
-
-    // MARK: — Утилиты
+    // MARK: — Ограничение в пределах изображения
     private func clamp(_ rect: CGRect, in bounds: CGRect, minSize: CGFloat) -> CGRect {
         guard bounds.width > 0, bounds.height > 0 else { return rect }
         var r = rect
@@ -302,8 +247,4 @@ private struct CropOverlay: View {
     }
 
     enum Corner { case topLeft, topRight, bottomLeft, bottomRight }
-    enum Edge { case top, bottom, left, right
-        var isVertical: Bool   { self == .left || self == .right }
-        var isHorizontal: Bool { self == .top  || self == .bottom }
-    }
 }
