@@ -4,7 +4,7 @@ import SwiftUI
 struct Misha_Pdf_ScanApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            StartView()
         }
     }
 }
