@@ -80,7 +80,7 @@ struct ImageEditorView: View {
         }
         .sheet(isPresented: $showCrop) {
             ManualCropSheet(image: working) { cropped in
-                if let cropped { self.working = cropped }
+                if let cropped { working = cropped }
             }
         }
         .alert("Не удалось найти границы документа", isPresented: $showAutoCropError) { Button("OK", role: .cancel) {} }
@@ -94,8 +94,8 @@ struct ImageEditorView: View {
         VisionAutoCropper.detectAndCorrectPerspective(image: working) { result in
             DispatchQueue.main.async {
                 switch result {
-                case let .success(img): self.working = img
-                case .failure: self.showAutoCropError = true
+                case let .success(img): working = img
+                case .failure: showAutoCropError = true
                 }
             }
         }
@@ -129,21 +129,21 @@ struct ManualCropSheet: View {
                                 Color.clear.onAppear {
                                     // compute image frame after layout
                                     let fitted = ImageFitter.fittedRect(contentSize: image.size, in: geo.size)
-                                    self.imageFrame = CGRect(origin: CGPoint(x: (geo.size.width - fitted.width) / 2,
-                                                                             y: (geo.size.height - fitted.height) / 2),
-                                                             size: fitted)
+                                    imageFrame = CGRect(origin: CGPoint(x: (geo.size.width - fitted.width) / 2,
+                                                                        y: (geo.size.height - fitted.height) / 2),
+                                                        size: fitted)
                                     if cropRect == .zero {
                                         // initialize crop rect with 80% of image frame
                                         let insetX = fitted.width * 0.1
                                         let insetY = fitted.height * 0.1
-                                        self.cropRect = imageFrame.insetBy(dx: insetX, dy: insetY)
+                                        cropRect = imageFrame.insetBy(dx: insetX, dy: insetY)
                                     }
                                 }
                                 .onChange(of: geo.size) { _ in
                                     let fitted = ImageFitter.fittedRect(contentSize: image.size, in: geo.size)
-                                    self.imageFrame = CGRect(origin: CGPoint(x: (geo.size.width - fitted.width) / 2,
-                                                                             y: (geo.size.height - fitted.height) / 2),
-                                                             size: fitted)
+                                    imageFrame = CGRect(origin: CGPoint(x: (geo.size.width - fitted.width) / 2,
+                                                                        y: (geo.size.height - fitted.height) / 2),
+                                                        size: fitted)
                                 }
                             })
                             .frame(width: geo.size.width, height: geo.size.height)
@@ -152,7 +152,7 @@ struct ManualCropSheet: View {
                         Color.black.opacity(0.5)
                             .mask(
                                 CropMask(cropRect: cropRect)
-                                    .fill(style: FillStyle(eoFill: true))
+                                    .fill(style: FillStyle(eoFill: true)),
                             )
 
                         // Crop rect with handles
@@ -240,7 +240,7 @@ struct CropOverlay: View {
                             newRect = CropMath.clamp(newRect, in: bounds)
                             cropRect = newRect
                         }
-                        .onEnded { _ in lastDrag = .zero }
+                        .onEnded { _ in lastDrag = .zero },
                 )
         }
         // Handles at corners & edges
@@ -264,7 +264,7 @@ struct CropOverlay: View {
                 DragGesture()
                     .onChanged { g in
                         cropRect = CropMath.resize(cropRect, with: g.translation, corner: corner, bounds: bounds)
-                    }
+                    },
             )
     }
 
@@ -277,7 +277,7 @@ struct CropOverlay: View {
                 DragGesture()
                     .onChanged { g in
                         cropRect = CropMath.resizeEdge(cropRect, with: g.translation, edge: edge, bounds: bounds)
-                    }
+                    },
             )
     }
 

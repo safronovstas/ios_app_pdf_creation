@@ -34,7 +34,7 @@ struct StartView: View {
 
     func exportPDF() {
         guard !pages.isEmpty else { return }
-        let images = pages.map { $0.image }
+        let images = pages.map(\.image)
         let url = PDFExporter.export(images: images, filename: "scan.pdf")
         let activity = UIActivityViewController(activityItems: [url], applicationActivities: nil)
         UIApplication.shared.topMostViewController()?.present(activity, animated: true)
@@ -71,7 +71,7 @@ struct StartView: View {
                                 PageRow(
                                     page: $pages[idx],
                                     index: idx + 1,
-                                    onDelete: { pages.remove(at: idx) }
+                                    onDelete: { pages.remove(at: idx) },
                                 )
                             }
                         }

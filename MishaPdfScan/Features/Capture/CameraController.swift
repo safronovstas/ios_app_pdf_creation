@@ -39,7 +39,7 @@ class CameraController: NSObject, ObservableObject,
         } else {
             AVCaptureDevice.requestAccess(for: .video) { [weak self] granted in
                 DispatchQueue.main.async {
-                    guard let self = self else { return }
+                    guard let self else { return }
                     self.authorized = granted
                     guard granted else { return }
                     self.startSession()
