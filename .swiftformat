@@ -1,0 +1,10 @@
+--indent 4
+--semicolons never
+--stripunusedargs closure-only
+--stripunusedclosures enabled
+--self insert
+--commas inline
+--elseposition same-line
+--operatorfunc spaced
+--disable redundantReturn,wrapArguments
+--maxwidth 120

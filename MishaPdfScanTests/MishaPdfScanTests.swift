@@ -6,9 +6,9 @@
 //
 
 import Testing
-@testable import Misha_Pdf_Scan
+@testable import MishaPdfScan
 
-struct Misha_Pdf_ScanTests {
+struct MishaPdfScanTests {
 
     @Test func example() async throws {
         // Write your test here and use APIs like `#expect(...)` to check expected conditions.

@@ -24,25 +24,25 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		A6209E672E5C9697006CA957 /* Misha Pdf Scan.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Misha Pdf Scan.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		A6209E742E5C9698006CA957 /* Misha Pdf ScanTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Misha Pdf ScanTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		A6209E7E2E5C9698006CA957 /* Misha Pdf ScanUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Misha Pdf ScanUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A6209E672E5C9697006CA957 /* MishaPdfScan.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MishaPdfScan.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A6209E742E5C9698006CA957 /* MishaPdfScanTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MishaPdfScanTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		A6209E7E2E5C9698006CA957 /* MishaPdfScanUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MishaPdfScanUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		A6209E692E5C9697006CA957 /* Misha Pdf Scan */ = {
+		A6209E692E5C9697006CA957 /* MishaPdfScan */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			path = "Misha Pdf Scan";
+			path = MishaPdfScan;
 			sourceTree = "<group>";
 		};
-		A6209E772E5C9698006CA957 /* Misha Pdf ScanTests */ = {
+		A6209E772E5C9698006CA957 /* MishaPdfScanTests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			path = "Misha Pdf ScanTests";
+			path = MishaPdfScanTests;
 			sourceTree = "<group>";
 		};
-		A6209E812E5C9698006CA957 /* Misha Pdf ScanUITests */ = {
+		A6209E812E5C9698006CA957 /* MishaPdfScanUITests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			path = "Misha Pdf ScanUITests";
+			path = MishaPdfScanUITests;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -75,9 +75,9 @@
 		A6209E5E2E5C9697006CA957 = {
 			isa = PBXGroup;
 			children = (
-				A6209E692E5C9697006CA957 /* Misha Pdf Scan */,
-				A6209E772E5C9698006CA957 /* Misha Pdf ScanTests */,
-				A6209E812E5C9698006CA957 /* Misha Pdf ScanUITests */,
+				A6209E692E5C9697006CA957 /* MishaPdfScan */,
+				A6209E772E5C9698006CA957 /* MishaPdfScanTests */,
+				A6209E812E5C9698006CA957 /* MishaPdfScanUITests */,
 				A6209E682E5C9697006CA957 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -85,9 +85,9 @@
 		A6209E682E5C9697006CA957 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				A6209E672E5C9697006CA957 /* Misha Pdf Scan.app */,
-				A6209E742E5C9698006CA957 /* Misha Pdf ScanTests.xctest */,
-				A6209E7E2E5C9698006CA957 /* Misha Pdf ScanUITests.xctest */,
+				A6209E672E5C9697006CA957 /* MishaPdfScan.app */,
+				A6209E742E5C9698006CA957 /* MishaPdfScanTests.xctest */,
+				A6209E7E2E5C9698006CA957 /* MishaPdfScanUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -95,31 +95,33 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		A6209E662E5C9697006CA957 /* Misha Pdf Scan */ = {
+		A6209E662E5C9697006CA957 /* MishaPdfScan */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = A6209E882E5C9698006CA957 /* Build configuration list for PBXNativeTarget "Misha Pdf Scan" */;
+			buildConfigurationList = A6209E882E5C9698006CA957 /* Build configuration list for PBXNativeTarget "MishaPdfScan" */;
 			buildPhases = (
 				A6209E632E5C9697006CA957 /* Sources */,
 				A6209E642E5C9697006CA957 /* Frameworks */,
 				A6209E652E5C9697006CA957 /* Resources */,
+				A6A806DD2E6708480031A25A /* swift_linter */,
+				A6A806DE2E6708860031A25A /* swift_format */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
-				A6209E692E5C9697006CA957 /* Misha Pdf Scan */,
+				A6209E692E5C9697006CA957 /* MishaPdfScan */,
 			);
-			name = "Misha Pdf Scan";
+			name = MishaPdfScan;
 			packageProductDependencies = (
 			);
 			productName = "Misha Pdf Scan";
-			productReference = A6209E672E5C9697006CA957 /* Misha Pdf Scan.app */;
+			productReference = A6209E672E5C9697006CA957 /* MishaPdfScan.app */;
 			productType = "com.apple.product-type.application";
 		};
-		A6209E732E5C9698006CA957 /* Misha Pdf ScanTests */ = {
+		A6209E732E5C9698006CA957 /* MishaPdfScanTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = A6209E8B2E5C9698006CA957 /* Build configuration list for PBXNativeTarget "Misha Pdf ScanTests" */;
+			buildConfigurationList = A6209E8B2E5C9698006CA957 /* Build configuration list for PBXNativeTarget "MishaPdfScanTests" */;
 			buildPhases = (
 				A6209E702E5C9698006CA957 /* Sources */,
 				A6209E712E5C9698006CA957 /* Frameworks */,
@@ -131,18 +133,18 @@
 				A6209E762E5C9698006CA957 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
-				A6209E772E5C9698006CA957 /* Misha Pdf ScanTests */,
+				A6209E772E5C9698006CA957 /* MishaPdfScanTests */,
 			);
-			name = "Misha Pdf ScanTests";
+			name = MishaPdfScanTests;
 			packageProductDependencies = (
 			);
 			productName = "Misha Pdf ScanTests";
-			productReference = A6209E742E5C9698006CA957 /* Misha Pdf ScanTests.xctest */;
+			productReference = A6209E742E5C9698006CA957 /* MishaPdfScanTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		A6209E7D2E5C9698006CA957 /* Misha Pdf ScanUITests */ = {
+		A6209E7D2E5C9698006CA957 /* MishaPdfScanUITests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = A6209E8E2E5C9698006CA957 /* Build configuration list for PBXNativeTarget "Misha Pdf ScanUITests" */;
+			buildConfigurationList = A6209E8E2E5C9698006CA957 /* Build configuration list for PBXNativeTarget "MishaPdfScanUITests" */;
 			buildPhases = (
 				A6209E7A2E5C9698006CA957 /* Sources */,
 				A6209E7B2E5C9698006CA957 /* Frameworks */,
@@ -154,13 +156,13 @@
 				A6209E802E5C9698006CA957 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
-				A6209E812E5C9698006CA957 /* Misha Pdf ScanUITests */,
+				A6209E812E5C9698006CA957 /* MishaPdfScanUITests */,
 			);
-			name = "Misha Pdf ScanUITests";
+			name = MishaPdfScanUITests;
 			packageProductDependencies = (
 			);
 			productName = "Misha Pdf ScanUITests";
-			productReference = A6209E7E2E5C9698006CA957 /* Misha Pdf ScanUITests.xctest */;
+			productReference = A6209E7E2E5C9698006CA957 /* MishaPdfScanUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
@@ -186,7 +188,7 @@
 					};
 				};
 			};
-			buildConfigurationList = A6209E622E5C9697006CA957 /* Build configuration list for PBXProject "Misha Pdf Scan" */;
+			buildConfigurationList = A6209E622E5C9697006CA957 /* Build configuration list for PBXProject "MishaPdfScan" */;
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -200,9 +202,9 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				A6209E662E5C9697006CA957 /* Misha Pdf Scan */,
-				A6209E732E5C9698006CA957 /* Misha Pdf ScanTests */,
-				A6209E7D2E5C9698006CA957 /* Misha Pdf ScanUITests */,
+				A6209E662E5C9697006CA957 /* MishaPdfScan */,
+				A6209E732E5C9698006CA957 /* MishaPdfScanTests */,
+				A6209E7D2E5C9698006CA957 /* MishaPdfScanUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -231,6 +233,45 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		A6A806DD2E6708480031A25A /* swift_linter */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = swift_linter;
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\nif which swiftlint >/dev/null; then\n  swiftlint --config \"${SRCROOT}/.swiftlint.yml\"\nelse\n  echo \"warning: SwiftLint not installed, run 'brew install swiftlint'\"\nfi\n";
+		};
+		A6A806DE2E6708860031A25A /* swift_format */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = swift_format;
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\nif which swiftformat >/dev/null; then\n  swiftformat .\nelse\n  echo \"warning: SwiftFormat not installed, run 'brew install swiftformat'\"\nfi\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		A6209E632E5C9697006CA957 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -258,12 +299,12 @@
 /* Begin PBXTargetDependency section */
 		A6209E762E5C9698006CA957 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = A6209E662E5C9697006CA957 /* Misha Pdf Scan */;
+			target = A6209E662E5C9697006CA957 /* MishaPdfScan */;
 			targetProxy = A6209E752E5C9698006CA957 /* PBXContainerItemProxy */;
 		};
 		A6209E802E5C9698006CA957 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = A6209E662E5C9697006CA957 /* Misha Pdf Scan */;
+			target = A6209E662E5C9697006CA957 /* MishaPdfScan */;
 			targetProxy = A6209E7F2E5C9698006CA957 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -473,7 +514,7 @@
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Misha Pdf Scan.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Misha Pdf Scan";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MishaPdfScan.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/MishaPdfScan";
 			};
 			name = Debug;
 		};
@@ -492,7 +533,7 @@
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Misha Pdf Scan.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Misha Pdf Scan";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MishaPdfScan.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/MishaPdfScan";
 			};
 			name = Release;
 		};
@@ -533,7 +574,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		A6209E622E5C9697006CA957 /* Build configuration list for PBXProject "Misha Pdf Scan" */ = {
+		A6209E622E5C9697006CA957 /* Build configuration list for PBXProject "MishaPdfScan" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				A6209E862E5C9698006CA957 /* Debug */,
@@ -542,7 +583,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		A6209E882E5C9698006CA957 /* Build configuration list for PBXNativeTarget "Misha Pdf Scan" */ = {
+		A6209E882E5C9698006CA957 /* Build configuration list for PBXNativeTarget "MishaPdfScan" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				A6209E892E5C9698006CA957 /* Debug */,
@@ -551,7 +592,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		A6209E8B2E5C9698006CA957 /* Build configuration list for PBXNativeTarget "Misha Pdf ScanTests" */ = {
+		A6209E8B2E5C9698006CA957 /* Build configuration list for PBXNativeTarget "MishaPdfScanTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				A6209E8C2E5C9698006CA957 /* Debug */,
@@ -560,7 +601,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		A6209E8E2E5C9698006CA957 /* Build configuration list for PBXNativeTarget "Misha Pdf ScanUITests" */ = {
+		A6209E8E2E5C9698006CA957 /* Build configuration list for PBXNativeTarget "MishaPdfScanUITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				A6209E8F2E5C9698006CA957 /* Debug */,

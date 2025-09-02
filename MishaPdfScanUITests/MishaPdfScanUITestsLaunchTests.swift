@@ -7,7 +7,7 @@
 
 import XCTest
 
-final class Misha_Pdf_ScanUITestsLaunchTests: XCTestCase {
+final class MishaPdfScanUITestsLaunchTests: XCTestCase {
 
     override class var runsForEachTargetApplicationUIConfiguration: Bool {
         true
