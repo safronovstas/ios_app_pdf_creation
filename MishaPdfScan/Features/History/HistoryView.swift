@@ -23,17 +23,23 @@ struct HistoryView: View {
                     Text("history.empty").foregroundStyle(.secondary)
                 }
                 ForEach(history.scans) { item in
-                    HStack {
-                        Image(systemName: "doc.richtext").font(.title3)
-                        VStack(alignment: .leading) {
-                            Text(item.name)
-                            Text("\(formatSize(item.sizeBytes)) • \(formatDate(item.createdAt))").font(.caption).foregroundStyle(.secondary)
-                        }
-                        Spacer()
-                        // Поделиться PDF (SwiftUI ShareLink)
-                        if #available(iOS 16.0, *) {
-                            ShareLink(item: item.url) { Image(systemName: "square.and.arrow.up") }
-                                .buttonStyle(.borderless)
+                    NavigationLink {
+                        PDFViewer(url: item.url)
+                            .navigationTitle(item.name)
+                            .navigationBarTitleDisplayMode(.inline)
+                    } label: {
+                        HStack {
+                            Image(systemName: "doc.richtext").font(.title3)
+                            VStack(alignment: .leading) {
+                                Text(item.name)
+                                Text("\(formatSize(item.sizeBytes)) • \(formatDate(item.createdAt))").font(.caption).foregroundStyle(.secondary)
+                            }
+                            Spacer()
+                            // Поделиться PDF (SwiftUI ShareLink)
+                            if #available(iOS 16.0, *) {
+                                ShareLink(item: item.url) { Image(systemName: "square.and.arrow.up") }
+                                    .buttonStyle(.borderless)
+                            }
                         }
                     }
                     .swipeActions(allowsFullSwipe: true) {
