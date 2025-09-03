@@ -66,7 +66,8 @@ public struct PageEditorView: View {
                         
                         // CURRENT (по центру, 3D наклон)
                         Image(uiImage: previewImage())
-                            .resizable().scaledToFit()
+                            .resizable()
+                            .scaledToFit()
                             .offset(x: dragX)
                             .rotation3DEffect(.degrees(Double(-8 * (dragX / w))),  // лёгкий наклон
                                               axis: (x: 0, y: 1, z: 0),
@@ -82,6 +83,7 @@ public struct PageEditorView: View {
                                 .opacity(0.7)
                         }
                     }
+                    .frame(width: geo.size.width, height: geo.size.height, alignment: .center) // центрируем всю группу
                     .contentShape(Rectangle())
                     .animation(.interactiveSpring(response: 0.28, dampingFraction: 0.85), value: dragX)
                     .gesture(
