@@ -1,13 +1,17 @@
 import SwiftUI
 
+
 @main
 struct MishaPdfScanApp: App {
-    @StateObject private var store = PagesStore()
-
+    @StateObject private var pagesStore = PagesStore()
+    @StateObject private var historyStore = HistoryStore()
+    
+    
     var body: some Scene {
         WindowGroup {
-            StartView()
-                .environmentObject(store)   // ← даём store всему дереву
+            RootTabView()
+                .environmentObject(pagesStore)
+                .environmentObject(historyStore)
         }
     }
 }

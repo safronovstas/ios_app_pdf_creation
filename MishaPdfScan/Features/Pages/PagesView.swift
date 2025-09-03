@@ -1,30 +1,25 @@
-// =====================================
-// Features/Pages/PagesView.swift
-// =====================================
 import SwiftUI
-
+import UniformTypeIdentifiers
 
 public struct PagesView: View {
     @EnvironmentObject private var store: PagesStore
-    
+
+    // экспорт
+    @State private var showOptions = false
+    @State private var options = PdfExportOptions.default
     @State private var showShare = false
-    @State private var showExporter = false
-    @State private var pdfData: Data = Data()
     @State private var exportURL: URL?
+    @State private var exportError: String?
     @State private var filename = PdfService.defaultFilename()
 
-    
     public init() {}
-    
-    
+
     public var body: some View {
         List {
             Section("Pages") {
                 ForEach(Array(store.pages.enumerated()), id: \.element.id) { idx, page in
                     NavigationLink {
                         PageEditorView(pageID: page.id, index: idx + 1, total: store.pages.count)
-                            .environmentObject(store) // если не пролито сверху
-
                     } label: {
                         HStack {
                             Image(uiImage: page.image)
@@ -43,59 +38,47 @@ public struct PagesView: View {
                 .onDelete(perform: store.remove)
             }
         }
-        .toolbar {
-                    ToolbarItemGroup(placement: .primaryAction) {
-                        // A) ShareLink (iOS 16+): быстро поделиться
-                        if #available(iOS 16.0, *) {
-                            Button {
-                                let svc = PdfService()
-                                let data = svc.makePDFData(images: store.pages.map(\.image))
-                                filename = PdfService.defaultFilename()
-                                do {
-                                    let url = try svc.writePDFToCaches(data, filename: filename)
-                                    exportURL = url
-                                    showShare = true   // через ShareSheet (надёжнее на iOS)
-                                } catch {
-                                    // как fallback: покажем fileExporter
-                                    pdfData = data
-                                    showExporter = true
-                                }
-                            } label: {
-                                Label("Экспорт", systemImage: "square.and.arrow.up")
-                            }
-                            .disabled(store.pages.isEmpty)
-                        } else {
-                            // < iOS 16 — сразу ShareSheet
-                            Button {
-                                let svc = PdfService()
-                                let data = svc.makePDFData(images: store.pages.map(\.image))
-                                filename = PdfService.defaultFilename()
-                                do {
-                                    let url = try svc.writePDFToCaches(data, filename: filename)
-                                    exportURL = url
-                                    showShare = true
-                                } catch {
-                                    // no-op
-                                }
-                            } label: {
-                                Label("Экспорт", systemImage: "square.and.arrow.up")
-                            }
-                            .disabled(store.pages.isEmpty)
-                        }
+        .navigationTitle("Документы")
+        // КНОПКА ЭКСПОРТА ВНИЗУ
+        .safeAreaInset(edge: .bottom) {
+            HStack {
+                Button {
+                    showOptions = true
+                } label: {
+                    Label("Экспорт", systemImage: "square.and.arrow.up")
+                        .frame(maxWidth: .infinity)
+                }
+                .buttonStyle(.borderedProminent)
+                .controlSize(.large)
+                .disabled(store.pages.isEmpty)
+            }
+            .padding(.horizontal).padding(.vertical, 8)
+            .background(.ultraThinMaterial)
+        }
+        // Окно настроек экспорта
+        .sheet(isPresented: $showOptions) {
+            ExportOptionsSheet(options: $options) {
+                Task {
+                    do {
+                        let svc = PdfService()
+                        let data = svc.makePDFData(images: store.pages.map(\.image), options: options)
+                        filename = PdfService.defaultFilename()
+                        let url = try svc.writePDFToCaches(data, filename: filename)
+                        exportURL = url
+                        showShare = true
+                    } catch {
+                        exportError = error.localizedDescription
                     }
                 }
-                // B) Поделиться (UIActivityViewController)
-                .sheet(isPresented: $showShare) {
-                    if let url = exportURL {
-                        ShareSheet(items: [url])
-                    }
-                }
-                // C) Сохранить в «Файлы» (fileExporter)
-                .fileExporter(isPresented: $showExporter,
-                              document: PDFFileDocument(data: pdfData),
-                              contentType: .pdf,
-                              defaultFilename: filename) { result in
-                    // можно обработать результат при желании
-                }
+            }
+        }
+        // Шеринг готового PDF
+        .sheet(isPresented: $showShare) {
+            if let url = exportURL { ShareSheet(items: [url]) }
+        }
+        .alert("Ошибка экспорта", isPresented: Binding(
+            get: { exportError != nil },
+            set: { if !$0 { exportError = nil } })
+        ) { Button("OK", role: .cancel) {} } message: { Text(exportError ?? "") }
     }
 }
