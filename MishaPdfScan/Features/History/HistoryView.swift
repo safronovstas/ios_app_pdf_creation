@@ -69,3 +69,11 @@ struct HistoryView: View {
     }
     private func formatDate(_ d: Date) -> String { let f = DateFormatter(); f.dateStyle = .medium; f.timeStyle = .short; return f.string(from: d) }
 }
+
+#if DEBUG
+struct HistoryView_Previews: PreviewProvider {
+    static var previews: some View {
+        NavigationStack { HistoryView().environmentObject(HistoryStore.previewWithSamples(count: 3)) }
+    }
+}
+#endif

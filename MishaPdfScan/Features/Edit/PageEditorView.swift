@@ -287,3 +287,17 @@ public struct PageEditorView: View {
         return UIImage(cgImage: cg, scale: fallback.scale, orientation: fallback.imageOrientation)
     }
 }
+
+#if DEBUG
+struct PageEditorView_Previews: PreviewProvider {
+    static var previews: some View {
+        let store = PagesStore.preview(withPages: 3)
+        // grab first page id after async add completes; provide a fallback UUID
+        let firstID = store.pages.first?.id ?? UUID()
+        return NavigationStack {
+            PageEditorView(pageID: firstID, index: 1, total: 3)
+                .environmentObject(store)
+        }
+    }
+}
+#endif

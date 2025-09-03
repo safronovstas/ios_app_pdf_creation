@@ -114,6 +114,14 @@ struct ManualCropSheet: View {
 
 }
 
+#if DEBUG
+struct ManualCropSheet_Previews: PreviewProvider {
+    static var previews: some View {
+        ManualCropSheet(image: PreviewHelpers.placeholderImage(), onFinish: { _ in })
+    }
+}
+#endif
+
 struct CropMask: Shape {
     var cropRect: CGRect
     func path(in rect: CGRect) -> Path {

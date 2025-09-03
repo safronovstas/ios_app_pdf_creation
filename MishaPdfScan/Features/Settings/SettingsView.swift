@@ -59,3 +59,17 @@ These Terms of Usage are a placeholder. Put your actual terms here or load them 
 1. Use at your own risk.\n2. We do not collect personal data.\n3. ...
 """
 }
+
+#if DEBUG
+struct SettingsView_Previews: PreviewProvider {
+    static var previews: some View {
+        NavigationStack { SettingsView() }
+    }
+}
+
+struct TermsView_Previews: PreviewProvider {
+    static var previews: some View {
+        NavigationStack { TermsView() }
+    }
+}
+#endif

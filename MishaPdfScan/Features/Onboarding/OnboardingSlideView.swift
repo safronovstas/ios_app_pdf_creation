@@ -30,3 +30,12 @@ struct OnboardingSlideView: View {
         .padding()
     }
 }
+
+#if DEBUG
+struct OnboardingSlideView_Previews: PreviewProvider {
+    static var previews: some View {
+        OnboardingSlideView(page: .init(title: "Scan documents", subtitle: "Auto crop and alignment", systemImage: "camera.viewfinder"))
+            .previewLayout(.sizeThatFits)
+    }
+}
+#endif

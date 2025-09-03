@@ -51,3 +51,13 @@ struct ExportOptionsSheet: View {
         }
     }
 }
+
+#if DEBUG
+struct ExportOptionsSheet_Previews: PreviewProvider {
+    struct Host: View {
+        @State var options: PdfExportOptions = .default
+        var body: some View { ExportOptionsSheet(options: $options) { } }
+    }
+    static var previews: some View { Host() }
+}
+#endif

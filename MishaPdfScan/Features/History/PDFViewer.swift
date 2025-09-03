@@ -27,3 +27,11 @@ private struct PDFKitView: UIViewRepresentable {
     }
 }
 
+#if DEBUG
+struct PDFViewer_Previews: PreviewProvider {
+    static var previews: some View {
+        let url = try? PreviewHelpers.makeSamplePDF(pages: 2)
+        return NavigationStack { PDFViewer(url: url!) }
+    }
+}
+#endif

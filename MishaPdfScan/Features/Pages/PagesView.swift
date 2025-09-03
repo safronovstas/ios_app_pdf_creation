@@ -32,3 +32,11 @@ public struct PagesView: View {
         .navigationTitle("pages.title")
     }
 }
+
+#if DEBUG
+struct PagesView_Previews: PreviewProvider {
+    static var previews: some View {
+        NavigationStack { PagesView().environmentObject(PagesStore.preview(withPages: 4)) }
+    }
+}
+#endif

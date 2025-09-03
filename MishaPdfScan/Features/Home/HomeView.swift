@@ -114,3 +114,15 @@ struct HomeView: View {
         }
     }
 }
+
+#if DEBUG
+struct HomeView_Previews: PreviewProvider {
+    static var previews: some View {
+        NavigationStack {
+            HomeView()
+                .environmentObject(PagesStore.preview(withPages: 3))
+                .environmentObject(HistoryStore.previewWithSamples(count: 2))
+        }
+    }
+}
+#endif

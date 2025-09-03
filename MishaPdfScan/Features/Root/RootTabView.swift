@@ -24,3 +24,13 @@ struct RootTabView: View {
         }
     }
 }
+
+#if DEBUG
+struct RootTabView_Previews: PreviewProvider {
+    static var previews: some View {
+        RootTabView()
+            .environmentObject(PagesStore.preview(withPages: 2))
+            .environmentObject(HistoryStore.previewWithSamples(count: 2))
+    }
+}
+#endif

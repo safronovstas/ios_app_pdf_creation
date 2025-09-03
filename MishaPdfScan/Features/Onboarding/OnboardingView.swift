@@ -33,3 +33,16 @@ struct OnboardingView: View {
         }
     }
 }
+
+#if DEBUG
+struct OnboardingView_Previews: PreviewProvider {
+    static var previews: some View {
+        let pages: [OnboardingPage] = [
+            .init(title: "Welcome", subtitle: "Scan documents easily.", systemImage: "camera.viewfinder"),
+            .init(title: "Import", subtitle: "Pick photos from library.", systemImage: "photo.on.rectangle"),
+            .init(title: "Edit", subtitle: "Rotate and crop.", systemImage: "doc.richtext")
+        ]
+        return OnboardingView(pages: pages, onFinish: {})
+    }
+}
+#endif
