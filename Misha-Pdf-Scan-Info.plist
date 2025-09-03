@@ -4,5 +4,9 @@
 <dict>
 	<key>CFBundleGetInfoString</key>
 	<string></string>
+
+	<!-- Indicate the app does not use non-exempt encryption to skip export compliance questions -->
+	<key>ITSAppUsesNonExemptEncryption</key>
+	<false/>
 </dict>
 </plist>
