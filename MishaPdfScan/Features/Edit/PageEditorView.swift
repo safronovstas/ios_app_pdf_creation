@@ -10,6 +10,9 @@ public struct PageEditorView: View {
     let pageID: UUID
     let startIndex: Int   // 1-based из списка
     
+    @Environment(\.dismiss) private var dismiss
+
+    
     // Текущее состояние
     @State private var currentIndex: Int = 0 // 0-based
     @State private var working: UIImage = UIImage()
@@ -159,7 +162,8 @@ public struct PageEditorView: View {
         }
         ToolbarItem(placement: .confirmationAction) {
             Button("Готово") {
-                applyEditsToCurrent()
+                applyEditsToCurrent()     // сохранить изменения текущей страницы
+                dismiss()                  // ← вернуться на список
             }.bold()
         }
     }
