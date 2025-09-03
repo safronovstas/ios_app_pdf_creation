@@ -1,0 +1,71 @@
+"tab.home" = "Home";
+"tab.history" = "History";
+"tab.settings" = "Settings";
+
+"home.title" = "Home";
+"home.pick_from_gallery" = "Pick from Photos";
+"home.scan" = "Scan";
+"home.empty_message" = "Start by scanning or import from Photos";
+"home.done_button" = "Done";
+
+"alert.saved.title" = "File saved";
+"alert.saved.message" = "PDF saved to History. You can share it now.";
+"alert.saved.share" = "Share";
+"alert.export_error.title" = "Export error";
+
+"common.ok" = "OK";
+"common.cancel" = "Cancel";
+"common.done" = "Done";
+
+"history.title" = "History";
+"history.empty" = "Your saved PDF scans will appear here";
+"history.delete" = "Delete";
+"history.share" = "Share";
+"history.refresh" = "Refresh";
+
+"pages.title" = "Documents";
+"pages.section" = "Pages";
+"pages.page" = "Page";
+
+"editor.title" = "Edit";
+"editor.reset" = "Reset";
+"editor.done" = "Done";
+"editor.rotate" = "Rotate";
+"editor.crop" = "Crop";
+"editor.mode" = "Mode";
+"editor.brightness" = "Brightness";
+"editor.contrast" = "Contrast";
+"editor.saturation" = "Saturation";
+"editor.preset.original" = "Original";
+"editor.preset.enhance" = "Enhance";
+"editor.preset.mono" = "B/W";
+"editor.preset.document" = "Document";
+
+"export.title" = "Export to PDF";
+"export.compression" = "Compression";
+"export.quality" = "Quality";
+"export.quality_hint" = "Lower quality → smaller file size";
+"export.image_size" = "Image size";
+"export.long_side" = "Long side";
+"export.size.original" = "Original";
+"export.size.1600" = "1600 px (small)";
+"export.size.2400" = "2400 px (medium)";
+"export.size.3200" = "3200 px (large)";
+"export.button" = "Export";
+
+"onboarding.scan.title" = "Scan documents";
+"onboarding.scan.subtitle" = "Use camera with auto crop and alignment.";
+"onboarding.import.title" = "Import from Photos";
+"onboarding.import.subtitle" = "Pick multiple pages from the gallery.";
+"onboarding.edit.title" = "Edit and export";
+"onboarding.edit.subtitle" = "Rotate, crop, export to PDF in one tap.";
+"onboarding.skip" = "Skip";
+"onboarding.next" = "Next";
+"onboarding.start" = "Start";
+
+"settings.title" = "Settings";
+"settings.share" = "Share";
+"settings.feedback" = "Feedback";
+"settings.terms" = "Terms of Usage";
+"settings.about" = "About";
+"settings.version" = "Version";

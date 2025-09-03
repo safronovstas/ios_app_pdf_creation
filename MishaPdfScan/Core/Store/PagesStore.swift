@@ -30,4 +30,8 @@ public final class PagesStore: ObservableObject {
         guard let idx = pages.firstIndex(where: { $0.id == pageID }) else { return }
         pages[idx].image = image
     }
+
+    @MainActor public func clear() {
+        withAnimation { pages.removeAll() }
+    }
 }

@@ -42,10 +42,10 @@ struct ManualCropSheet: View {
             }
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
-                    Button("Отмена") { dismiss(); onFinish(nil) }
+                    Button("common.cancel") { dismiss(); onFinish(nil) }
                 }
                 ToolbarItem(placement: .confirmationAction) {
-                    Button("Обрезать") {
+                    Button("editor.crop") {
                         onFinish(renderCropped())
                         dismiss()
                     }.bold().disabled(!isReady)

@@ -16,11 +16,11 @@ struct RootTabView: View {
     var body: some View {
         TabView {
             HomeView()
-                .tabItem { Label("Home", systemImage: "house") }
+                .tabItem { Label("tab.home", systemImage: "house") }
             HistoryView()
-                .tabItem { Label("History", systemImage: "clock") }
+                .tabItem { Label("tab.history", systemImage: "clock") }
             SettingsView()
-                .tabItem { Label("Settings", systemImage: "gearshape") }
+                .tabItem { Label("tab.settings", systemImage: "gearshape") }
         }
     }
 }

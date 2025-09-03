@@ -1,0 +1,71 @@
+"tab.home" = "Главная";
+"tab.history" = "История";
+"tab.settings" = "Настройки";
+
+"home.title" = "Главная";
+"home.pick_from_gallery" = "Выбрать из галереи";
+"home.scan" = "Сканировать";
+"home.empty_message" = "Начни со сканирования или импорта из галереи";
+"home.done_button" = "Готово";
+
+"alert.saved.title" = "Файл сохранён";
+"alert.saved.message" = "PDF сохранён в Истории. Теперь можно поделиться.";
+"alert.saved.share" = "Поделиться";
+"alert.export_error.title" = "Ошибка экспорта";
+
+"common.ok" = "ОК";
+"common.cancel" = "Отмена";
+"common.done" = "Готово";
+
+"history.title" = "История";
+"history.empty" = "Здесь появятся ваши сохранённые PDF-сканы";
+"history.delete" = "Удалить";
+"history.share" = "Поделиться";
+"history.refresh" = "Обновить";
+
+"pages.title" = "Документы";
+"pages.section" = "Страницы";
+"pages.page" = "Страница";
+
+"editor.title" = "Редактирование";
+"editor.reset" = "Сброс";
+"editor.done" = "Готово";
+"editor.rotate" = "Повернуть";
+"editor.crop" = "Обрезать";
+"editor.mode" = "Режим";
+"editor.brightness" = "Яркость";
+"editor.contrast" = "Контраст";
+"editor.saturation" = "Насыщенность";
+"editor.preset.original" = "Оригинал";
+"editor.preset.enhance" = "Улучшение";
+"editor.preset.mono" = "Ч/Б";
+"editor.preset.document" = "Документ";
+
+"export.title" = "Экспорт в PDF";
+"export.compression" = "Компрессия";
+"export.quality" = "Качество";
+"export.quality_hint" = "Меньше качество → меньше размер файла";
+"export.image_size" = "Размер изображений";
+"export.long_side" = "Длинная сторона";
+"export.size.original" = "Оригинал";
+"export.size.1600" = "1600 px (мал.)";
+"export.size.2400" = "2400 px (сред.)";
+"export.size.3200" = "3200 px (крупн.)";
+"export.button" = "Экспорт";
+
+"onboarding.scan.title" = "Сканируй документы";
+"onboarding.scan.subtitle" = "Используй камеру, автообрезку и выравнивание.";
+"onboarding.import.title" = "Импортируй из галереи";
+"onboarding.import.subtitle" = "Выбирай сразу несколько страниц из Фото.";
+"onboarding.edit.title" = "Редактируй и экспортируй";
+"onboarding.edit.subtitle" = "Поворот, обрезка, PDF одним тапом.";
+"onboarding.skip" = "Пропустить";
+"onboarding.next" = "Далее";
+"onboarding.start" = "Начать";
+
+"settings.title" = "Настройки";
+"settings.share" = "Поделиться";
+"settings.feedback" = "Обратная связь";
+"settings.terms" = "Условия использования";
+"settings.about" = "О приложении";
+"settings.version" = "Версия";

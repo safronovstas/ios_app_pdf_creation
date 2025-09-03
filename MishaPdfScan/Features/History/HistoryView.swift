@@ -20,7 +20,7 @@ struct HistoryView: View {
         NavigationStack {
             List {
                 if history.scans.isEmpty {
-                    Text("Здесь появятся ваши сохранённые PDF-сканы").foregroundStyle(.secondary)
+                    Text("history.empty").foregroundStyle(.secondary)
                 }
                 ForEach(history.scans) { item in
                     HStack {
@@ -37,24 +37,21 @@ struct HistoryView: View {
                         }
                     }
                     .swipeActions(allowsFullSwipe: true) {
-                        Button(role: .destructive) { delete(item) } label: { Label("Удалить", systemImage: "trash") }
+                        Button(role: .destructive) { delete(item) } label: { Label("history.delete", systemImage: "trash") }
                     }
                     .contextMenu {
-                        Button(role: .destructive) { delete(item) } label: { Label("Удалить", systemImage: "trash") }
+                        Button(role: .destructive) { delete(item) } label: { Label("history.delete", systemImage: "trash") }
                         if #available(iOS 16.0, *) {
-                            ShareLink(item: item.url) { Label("Поделиться", systemImage: "square.and.arrow.up") }
+                            ShareLink(item: item.url) { Label("history.share", systemImage: "square.and.arrow.up") }
                         }
                     }
                 }
                 .onDelete { history.delete(at: $0) }
             }
-            .navigationTitle("History")
+            .navigationTitle("history.title")
 
             
-            .toolbar { Button{ history.refresh() } label: { Label(
-                "История",
-                systemImage: "arrow.clockwise")
-            }}
+            .toolbar { Button{ history.refresh() } label: { Label("history.refresh", systemImage: "arrow.clockwise") }}
         }
     }
     

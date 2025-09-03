@@ -22,29 +22,29 @@ struct SettingsView: View {
                 Section {
                     if #available(iOS 16.0, *) {
                         ShareLink(item: URL(string: "https://example.com/app")!) {
-                            Label("Share", systemImage: "square.and.arrow.up")
+                            Label("settings.share", systemImage: "square.and.arrow.up")
                         }
                     } else {
                         Button { openURL(URL(string: "https://example.com/app")!) } label: {
-                            Label("Share", systemImage: "square.and.arrow.up")
+                            Label("settings.share", systemImage: "square.and.arrow.up")
                         }
                     }
                     
                     
                     Button {
                         if let url = URL(string: "mailto:support@example.com?subject=Scanner%20Feedback") { openURL(url) }
-                    } label: { Label("Feedback", systemImage: "envelope") }
+                    } label: { Label("settings.feedback", systemImage: "envelope") }
                     
                     
-                    NavigationLink { TermsView() } label: { Label("Terms of Usage", systemImage: "doc.text") }
+                    NavigationLink { TermsView() } label: { Label("settings.terms", systemImage: "doc.text") }
                 }
                 
                 
-                Section("About") {
-                    HStack { Text("Version"); Spacer(); Text(Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "-").foregroundStyle(.secondary) }
+                Section("settings.about") {
+                    HStack { Text("settings.version"); Spacer(); Text(Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "-").foregroundStyle(.secondary) }
                 }
             }
-            .navigationTitle("Settings")
+            .navigationTitle("settings.title")
         }
     }
 }
@@ -52,7 +52,7 @@ struct SettingsView: View {
 
 struct TermsView: View {
     var body: some View {
-        ScrollView { Text(sample).padding() }.navigationTitle("Terms of Usage").navigationBarTitleDisplayMode(.inline)
+        ScrollView { Text(sample).padding() }.navigationTitle("settings.terms").navigationBarTitleDisplayMode(.inline)
     }
     private let sample = """
 These Terms of Usage are a placeholder. Put your actual terms here or load them from a remote source.

@@ -13,14 +13,14 @@ struct StartView: View {
     @State private var showOnboarding = false
     
     private let onboardingPages: [OnboardingPage] = [
-        .init(title: "Сканируй документы",
-              subtitle: "Используй камеру, автообрезку и выравнивание.",
+        .init(title: String(localized: "onboarding.scan.title"),
+              subtitle: String(localized: "onboarding.scan.subtitle"),
               systemImage: "camera.viewfinder"),
-        .init(title: "Импортируй из галереи",
-              subtitle: "Выбирай сразу несколько страниц из Фото.",
+        .init(title: String(localized: "onboarding.import.title"),
+              subtitle: String(localized: "onboarding.import.subtitle"),
               systemImage: "photo.on.rectangle"),
-        .init(title: "Редактируй и экспортируй",
-              subtitle: "Поворот, обрезка, PDF одним тапом.",
+        .init(title: String(localized: "onboarding.edit.title"),
+              subtitle: String(localized: "onboarding.edit.subtitle"),
               systemImage: "doc.richtext"),
     ]
     
@@ -53,7 +53,7 @@ struct StartView: View {
                     maxSelectionCount: 50,
                     matching: .images
                 ) {
-                    Label("Выбрать из галереи", systemImage: "photo.on.rectangle")
+                    Label("home.pick_from_gallery", systemImage: "photo.on.rectangle")
                         .frame(maxWidth: .infinity)
                 }
                 .buttonStyle(.bordered)
@@ -74,7 +74,7 @@ struct StartView: View {
                 Button {
                     showCamera = true
                 } label: {
-                    Label("Сканировать", systemImage: "camera.viewfinder")
+                    Label("home.scan", systemImage: "camera.viewfinder")
                         .frame(maxWidth: .infinity)
                 }
                 .buttonStyle(.borderedProminent)
@@ -83,7 +83,7 @@ struct StartView: View {
                 
                 if store.pages.isEmpty {
                     Spacer()
-                    Text("Начни со сканирования или импорта из галереи")
+                    Text("home.empty_message")
                         .foregroundStyle(.secondary)
                     Spacer()
                 } else {
@@ -92,7 +92,7 @@ struct StartView: View {
                 }
             }
             .padding()
-            .navigationTitle("Документы")
+            .navigationTitle("pages.title")
         }
         // Открыть мультивыбор Фото
         .sheet(isPresented: $showGallery) {

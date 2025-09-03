@@ -8,10 +8,10 @@ struct ExportOptionsSheet: View {
     var body: some View {
         NavigationStack {
             Form {
-                Section("Компрессия") {
+                Section("export.compression") {
                     VStack(alignment: .leading, spacing: 8) {
                         HStack {
-                            Text("Качество")
+                            Text("export.quality")
                             Spacer()
                             Text(String(format: "%.0f%%", options.jpegQuality * 100))
                                 .foregroundStyle(.secondary)
@@ -20,28 +20,28 @@ struct ExportOptionsSheet: View {
                             get: { Double(options.jpegQuality) },
                             set: { options.jpegQuality = CGFloat($0) }
                         ), in: 0.3...0.95)
-                        Text("Меньше качество → меньше размер файла").font(.caption).foregroundStyle(.secondary)
+                        Text("export.quality_hint").font(.caption).foregroundStyle(.secondary)
                     }
                 }
-                Section("Размер изображений") {
-                    Picker("Длинная сторона", selection: Binding(
+                Section("export.image_size") {
+                    Picker("export.long_side", selection: Binding(
                         get: { options.maxLongSide },
                         set: { options.maxLongSide = $0 }
                     )) {
-                        Text("Оригинал").tag(CGFloat(0))
-                        Text("1600 px (мал.)").tag(CGFloat(1600))
-                        Text("2400 px (сред.)").tag(CGFloat(2400))
-                        Text("3200 px (крупн.)").tag(CGFloat(3200))
+                        Text("export.size.original").tag(CGFloat(0))
+                        Text("export.size.1600").tag(CGFloat(1600))
+                        Text("export.size.2400").tag(CGFloat(2400))
+                        Text("export.size.3200").tag(CGFloat(3200))
                     }
                 }
             }
-            .navigationTitle("Экспорт в PDF")
+            .navigationTitle("export.title")
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
-                    Button("Отмена") { dismiss() }
+                    Button("common.cancel") { dismiss() }
                 }
                 ToolbarItem(placement: .confirmationAction) {
-                    Button("Экспорт") {
+                    Button("export.button") {
                         onExport()
                         dismiss()
                     }

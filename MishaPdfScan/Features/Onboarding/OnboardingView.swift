@@ -22,9 +22,9 @@ struct OnboardingView: View {
             .indexViewStyle(.page(backgroundDisplayMode: .always))
 
             HStack {
-                Button("Пропустить") { onFinish() }
+                Button("onboarding.skip") { onFinish() }
                 Spacer()
-                Button(index < pages.count - 1 ? "Далее" : "Начать") {
+                Button(index < pages.count - 1 ? String(localized: "onboarding.next") : String(localized: "onboarding.start")) {
                     if index < pages.count - 1 { index += 1 } else { onFinish() }
                 }
                 .buttonStyle(.borderedProminent)

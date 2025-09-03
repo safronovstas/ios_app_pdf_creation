@@ -26,10 +26,10 @@ public struct PageEditorView: View {
         public var id: String { rawValue }
         var title: String {
             switch self {
-            case .original: return "Оригинал"
-            case .enhance:  return "Улучшение"
-            case .mono:     return "Ч/Б"
-            case .document: return "Документ"
+            case .original: return NSLocalizedString("editor.preset.original", comment: "")
+            case .enhance:  return NSLocalizedString("editor.preset.enhance", comment: "")
+            case .mono:     return NSLocalizedString("editor.preset.mono", comment: "")
+            case .document: return NSLocalizedString("editor.preset.document", comment: "")
             }
         }
     }
@@ -122,7 +122,7 @@ public struct PageEditorView: View {
                 }
                 
                 
-                // Индикатор "i / N"
+                // Indicator "i / N"
                 Text("\(currentIndex + 1) / \(store.pages.count)")
                     .font(.caption).bold()
                     .padding(.horizontal, 10).padding(.vertical, 6)
@@ -131,12 +131,12 @@ public struct PageEditorView: View {
             }
             .frame(maxHeight: .infinity)
             
-            // Панель инструментов внизу
+            // Bottom toolbar
             controls
                 .padding(.top, 8)
                 .background(.ultraThinMaterial)
         }
-        .navigationTitle("Редактирование")
+        .navigationTitle("editor.title")
         .navigationBarTitleDisplayMode(.inline)
         .toolbar { toolbar }
         .sheet(isPresented: $showCrop) {
@@ -158,10 +158,10 @@ public struct PageEditorView: View {
     // MARK: - Toolbar
     @ToolbarContentBuilder private var toolbar: some ToolbarContent {
         ToolbarItem(placement: .cancellationAction) {
-            Button("Сброс") { resetAll() }
+            Button("editor.reset") { resetAll() }
         }
         ToolbarItem(placement: .confirmationAction) {
-            Button("Готово") {
+            Button("common.done") {
                 applyEditsToCurrent()     // сохранить изменения текущей страницы
                 dismiss()                  // ← вернуться на список
             }.bold()
@@ -173,31 +173,31 @@ public struct PageEditorView: View {
         VStack(spacing: 12) {
             HStack(spacing: 12) {
                 Button { if let r = working.rotated(byDegrees: -90) { working = r } } label: {
-                    Label("Повернуть", systemImage: "rotate.left")
+                    Label("editor.rotate", systemImage: "rotate.left")
                 }.buttonStyle(.bordered)
                 
                 Button { if let r = working.rotated(byDegrees: 90) { working = r } } label: {
-                    Label("Повернуть", systemImage: "rotate.right")
+                    Label("editor.rotate", systemImage: "rotate.right")
                 }.buttonStyle(.bordered)
                 
                 Button { showCrop = true } label: {
-                    Label("Обрезать", systemImage: "crop")
+                    Label("editor.crop", systemImage: "crop")
                 }.buttonStyle(.bordered)
                 
                 Spacer()
             }
             
-            Picker("Режим", selection: $preset) {
+            Picker("editor.mode", selection: $preset) {
                 ForEach(ColorPreset.allCases) { Text($0.title).tag($0) }
             }
             .pickerStyle(.segmented)
             
             VStack(alignment: .leading, spacing: 10) {
-                HStack { Text("Яркость"); Spacer(); Text(String(format: "%.2f", brightness)) }
+                HStack { Text("editor.brightness"); Spacer(); Text(String(format: "%.2f", brightness)) }
                 Slider(value: $brightness, in: -1...1)
-                HStack { Text("Контраст"); Spacer(); Text(String(format: "%.2f", contrast)) }
+                HStack { Text("editor.contrast"); Spacer(); Text(String(format: "%.2f", contrast)) }
                 Slider(value: $contrast, in: 0...4)
-                HStack { Text("Насыщенность"); Spacer(); Text(String(format: "%.2f", saturation)) }
+                HStack { Text("editor.saturation"); Spacer(); Text(String(format: "%.2f", saturation)) }
                 Slider(value: $saturation, in: 0...2)
             }
             .font(.caption)
